@@ -1,11 +1,8 @@
 const express = require('express');
-const router = express('router');
-const db_conn = require('../db_conn');
+const router = express.Router();
 
-router.get('/', (req, res)=>{
-    res.send('Hare krishna');
-});
+const BaseController = require('../src/controller/BaseController.js');
 
+router.get('/', BaseController.index);
 
 module.exports = router;
-

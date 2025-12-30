@@ -1,16 +1,22 @@
-require('dotenv').config();
+#!/usr/bin/env node
+
 const express = require('express');
 const app = express();
-const PORT = 3001
-const webroutes = require('./routes/web');
-const adminroutes = require('./routes/admin');
-app.use(express.json());
+const PORT = 3000;
+const path = require('path');
 
-app.use('/', webroutes);
+const Routes = require('./routes/web.js');
+const expressEjsLayouts = require('express-ejs-layouts');
 
-app.use('/admin', adminroutes);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname,'src', 'views'));
+// console.log('VIEWS PATH =>', app.get('views'));
 
-app.listen(PORT, ()=>{
-    
-    console.log(`✅ Server running at http://localhost:${PORT}`);
+app.use(expressEjsLayouts);
+
+app.set('layout', 'layout/main');
+app.use('/', Routes);
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
 });
